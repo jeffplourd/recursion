@@ -23,6 +23,33 @@ var stringifyJSON = function(obj) {
 			return '[' + accum.slice(0,-1) + ']';
 		}
 		
+	}else if(typeof obj === 'object' && obj !== null) {
+		var objLen = Object.keys(obj).length;
+		
+		if(objLen === 0) {
+			return "{}";
+		}else if(objLen === 1) {
+			var accum = '';
+			_.each(obj, function(elem, prop, collection) {
+				if(typeof prop === 'string') {
+					accum = accum + stringifyJSON(prop) + ':' + stringifyJSON(elem);
+				}else {
+					throw error;
+				}
+			});
+			return '{' + accum + '}';
+		}else {
+			var accum = '';
+			_.each(obj, function(elem, prop, collection) {
+				if(typeof prop === 'string') {
+					accum = accum + stringifyJSON(prop) + ':' + stringifyJSON(elem) + ',';
+				}else {
+					throw error;
+				}
+			});
+			return '{' + accum.slice(0,-1) + '}';
+		}
+
 	}else if(typeof obj === "string") {
 		return '"' + obj + '"';
 	}else {
