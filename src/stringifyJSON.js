@@ -41,10 +41,10 @@ var stringifyJSON = function(obj) {
 		}else {
 			var accum = '';
 			_.each(obj, function(elem, prop, collection) {
-				if(typeof prop === 'string') {
+				if(typeof prop === 'string' && typeof elem !== 'function' && elem !== undefined) {
 					accum = accum + stringifyJSON(prop) + ':' + stringifyJSON(elem) + ',';
 				}else {
-					throw error;
+					
 				}
 			});
 			return '{' + accum.slice(0,-1) + '}';
